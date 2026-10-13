@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة التحميلات والملفات</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 26px;
+        }
+
+        /* قائمة الملفات */
+        .file-card {
+            background-color: var(--card-bg);
+            padding: 18px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #334155;
+        }
+
+        .file-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 17px;
+        }
+
+        .file-info span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* صفحة التحميل والعداد */
+        .hidden { display: none; }
+
+        .download-box {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .ad-banner {
+            background-color: #334155;
+            border: 2px dashed #64748b;
+            padding: 30px 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: var(--text-muted);
+        }
+
+        .timer {
+            font-size: 18px;
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- قائمة الملفات المعروضة للزوار -->
+    <div id="homePage">
+        <h1>📁 قائمة الملفات المتاحة للتحميل</h1>
+        <div id="filesList"></div>
+    </div>
+
+    <!-- صفحة التحميل والإعلانات -->
+    <div id="downloadPage" class="hidden">
+        <div class="download-box">
+            <h2 id="currentFileName">اسم الملف</h2>
+            
+            <!-- مكان إعلانات Pop-under / Banner -->
+            <div class="ad-banner">
+                <!-- ضَع كود الإعلان من شبكة الإعلانات هنا -->
+                📢 إعلان (سيظهر هنا بنر أو عند الضغط يفتح إعلان Pop-under)
+            </div>
+
+            <div class="timer" id="timerText">
+                انتظر <span id="seconds">10</span> ثانية لتجهيز رابط التحميل...
+            </div>
+
+            <a id="finalDownloadBtn" href="#" target="_blank" class="btn hidden">🚀 تحميل الملف الآن</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // 1. قائمة الملفات التي ترفعها أنت وتضع روابطها هنا
+    const myFiles = [
+        {
+            id: 1,
+            title: "برنامج فوتوشوب نسخة خفيفة",
+            size: "150 ميجابايت",
+            downloadUrl: "https://example.com/files/photoshop.zip" // رابط ملفك المباشر
+        },
+        {
+            id: 2,
+            title: "كتاب شرح الـ HTML & CSS (PDF)",
+            size: "12 ميجابايت",
+            downloadUrl: "https://example.com/files/html-guide.pdf"
+        },
+        {
+            id: 3,
+            title: "ملف كورسات تجميعية 2026",
+            size: "450 ميجابايت",
+            downloadUrl: "https://example.com/files/courses.zip"
+        }
+    ];
+
+    // عرض القائمة في الصفحة الرئيسية
+    const filesList = document.getElementById('filesList');
+    myFiles.forEach(file => {
+        filesList.innerHTML += `
+            <div class="file-card">
+                <div class="file-info">
+                    <h3>${file.title}</h3>
+                    <span>الحجم: ${file.size}</span>
+                </div>
+                <button class="btn" onclick="openDownloadPage('${file.title}', '${file.downloadUrl}')">تحميل</button>
+            </div>
+        `;
+    });
+
+    // فتح صفحة التحميل والعداد
+    function openDownloadPage(title, url) {
+        document.getElementById('homePage').classList.add('hidden');
+        document.getElementById('downloadPage').classList.remove('hidden');
+        document.getElementById('currentFileName').textContent = title;
+
+        let timeLeft = 10;
+        const secondsSpan = document.getElementById('seconds');
+        
+        const timer = setInterval(() => {
+            timeLeft--;
+            secondsSpan.textContent = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                document.getElementById('timerText').classList.add('hidden');
+                
+                const finalBtn = document.getElementById('finalDownloadBtn');
+                finalBtn.href = url;
+                finalBtn.classList.remove('hidden');
+            }
+        }, 1000);
+    }
+</script>
+<div>
+    <h1>صلي على النبي </h1>
+</div>
+</body>
+</html>
