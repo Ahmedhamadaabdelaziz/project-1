@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة التحميلات والملفات</title>
+    <title>مكتبة الملفات والتحميل</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -66,6 +66,9 @@
             cursor: pointer;
             font-weight: bold;
             transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .btn:hover {
@@ -84,11 +87,15 @@
 
         .ad-banner {
             background-color: #334155;
-            border: 2px dashed #64748b;
-            padding: 30px 15px;
+            border: 1px dashed #64748b;
+            padding: 15px;
             border-radius: 10px;
             margin: 20px 0;
             color: var(--text-muted);
+            min-height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .timer {
@@ -102,25 +109,27 @@
 
 <div class="container">
 
-    <!-- قائمة الملفات المعروضة للزوار -->
+    <!-- 1. قائمة الملفات الرئيسية -->
     <div id="homePage">
         <h1>📁 قائمة الملفات المتاحة للتحميل</h1>
         <div id="filesList"></div>
     </div>
 
-    <!-- صفحة التحميل والإعلانات -->
+    <!-- 2. صفحة التحميل والعداد -->
     <div id="downloadPage" class="hidden">
         <div class="download-box">
             <h2 id="currentFileName">اسم الملف</h2>
             
-            <!-- مكان إعلانات Pop-under / Banner -->
+            <p style="color: var(--text-muted); font-size: 14px;">يرجى الانتظار حتى اكتمال عداد التحميل...</p>
+
+            <!-- إعلان البنر الثابت (المنصة الثانية) -->
             <div class="ad-banner">
-                <!-- ضَع كود الإعلان من شبكة الإعلانات هنا -->
-                📢 إعلان (سيظهر هنا بنر أو عند الضغط يفتح إعلان Pop-under)
+                <!-- ضع هنا كود إعلان البنر (Banner) الخاص بالمنصة الثانية -->
+                <span>إعلان بنر ثابت (ضع كود المنصة هنا)</span>
             </div>
 
             <div class="timer" id="timerText">
-                انتظر <span id="seconds">10</span> ثانية لتجهيز رابط التحميل...
+                تجهيز الرابط خلال <span id="seconds">10</span> ثانية...
             </div>
 
             <a id="finalDownloadBtn" href="#" target="_blank" class="btn hidden">🚀 تحميل الملف الآن</a>
@@ -130,30 +139,22 @@
 </div>
 
 <script>
-    // 1. قائمة الملفات التي ترفعها أنت وتضع روابطها هنا
+    // قائمة ملفاتك التي ترفعها وتحط روابطها المباشرة هنا
     const myFiles = [
         {
-            id: 1,
             title: "برنامج فوتوشوب نسخة خفيفة",
             size: "150 ميجابايت",
-            downloadUrl: "https://example.com/files/photoshop.zip" // رابط ملفك المباشر
+            downloadUrl: "https://example.com/files/photoshop.zip"
         },
         {
-            id: 2,
             title: "كتاب شرح الـ HTML & CSS (PDF)",
             size: "12 ميجابايت",
             downloadUrl: "https://example.com/files/html-guide.pdf"
-        },
-        {
-            id: 3,
-            title: "ملف كورسات تجميعية 2026",
-            size: "450 ميجابايت",
-            downloadUrl: "https://example.com/files/courses.zip"
         }
     ];
 
-    // عرض القائمة في الصفحة الرئيسية
-    const filesList = document.getElementById('filesList');
+    // عرض القائمة تلقائياً
+    const filesList = doctype = document.getElementById('filesList');
     myFiles.forEach(file => {
         filesList.innerHTML += `
             <div class="file-card">
@@ -166,8 +167,12 @@
         `;
     });
 
-    // فتح صفحة التحميل والعداد
+    // دالة الانتقال لصفحة التحميل وتفعيل الإعلانات
     function openDownloadPage(title, url) {
+        // 1. تشغيل إعلان الـ Pop-under (المنصة الأولى) في نافذة جديدة بمجرد الضغط
+        window.open("https://uplcm.com/4/11848567", "_blank");
+
+        // 2. إظهار صفحة العداد للمستخدم
         document.getElementById('homePage').classList.add('hidden');
         document.getElementById('downloadPage').classList.remove('hidden');
         document.getElementById('currentFileName').textContent = title;
@@ -184,13 +189,14 @@
                 document.getElementById('timerText').classList.add('hidden');
                 
                 const finalBtn = document.getElementById('finalDownloadBtn');
-                finalBtn.href = url;
+                finalBtn.href = url; // رابط الملف الحقيقي
                 finalBtn.classList.remove('hidden');
             }
         }, 1000);
     }
 </script>
 <div>
+
     <h1>صلي على النبي محمد </h1>
 </div>
 </body>
