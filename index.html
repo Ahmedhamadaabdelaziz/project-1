@@ -3,209 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name='discription' content="ملفات ,تحميل ,">
-    <meta name="keywords" content="files,file">
-    <title>ملفات تحميل </title>
+    <title>مركز التحميلات المتقدم</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+        }
+
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --text: #f8fafc;
+            --bg-color: #0b0f19;
+            --surface-color: #151c2c;
+            --surface-border: #232d42;
+            --accent-primary: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --card-hover: #1e293b;
         }
 
         body {
-            font-family: system-ui, -apple-system, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 30px 16px;
             display: flex;
             justify-content: center;
+            align-items: flex-start;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(14, 165, 233, 0.08) 0%, transparent 40%);
         }
 
-        .container {
+        .app-wrapper {
             width: 100%;
-            max-width: 650px;
+            max-width: 760px;
         }
 
-        h1 {
+        /* Top Bar */
+        .brand-header {
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 26px;
+            margin-bottom: 32px;
         }
 
-        /* قائمة الملفات */
-        .file-card {
-            background-color: var(--card-bg);
-            padding: 18px 20px;
+        .brand-header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Category Nav Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            background: var(--surface-color);
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--surface-border);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
             border-radius: 12px;
-            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn i {
+            font-size: 16px;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        /* Cards List */
+        .items-grid {
+            display: grid;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .file-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #334155;
+            transition: all 0.25s ease;
         }
 
-        .file-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 17px;
+        .file-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            background-color: var(--card-hover);
         }
 
-        .file-info span {
+        .item-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .item-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .item-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .item-meta {
             font-size: 13px;
             color: var(--text-muted);
+            display: flex;
+            gap: 12px;
         }
 
-        .btn {
-            background-color: var(--primary);
-            color: white;
+        .btn-download {
+            background-color: var(--accent-primary);
+            color: #ffffff;
             border: none;
-            padding: 9px 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* صفحة التحميل والعداد */
-        .hidden { display: none; }
-
-        .download-box {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-        }
-
-        .ad-banner {
-            background-color: #334155;
-            border: 1px dashed #64748b;
-            padding: 15px;
+            padding: 10px 22px;
             border-radius: 10px;
-            margin: 20px 0;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-download:hover {
+            opacity: 0.9;
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        /* Countdown / Gate Screen */
+        .download-gate {
+            background: var(--surface-color);
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            padding: 36px 24px;
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             color: var(--text-muted);
-            min-height: 90px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--text-main);
+        }
+
+        .gate-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .ad-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--surface-border);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 24px 0;
+            min-height: 80px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .timer {
-            font-size: 18px;
+        .counter-badge {
+            font-size: 16px;
+            font-weight: 600;
             color: #38bdf8;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+        }
+
+        .counter-number {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .footer-blessing {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--surface-border);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="app-wrapper">
 
-    <!-- 1. قائمة الملفات الرئيسية -->
-    <div id="homePage">
-        <h1>📁 قائمة الملفات المتاحة للتحميل</h1>
-        <div id="filesList"></div>
+    <!-- Header -->
+    <div class="brand-header">
+        <h1><i class="fa-solid fa-box-archive" style="color: var(--accent-primary); margin-left: 8px;"></i>مركز التحميل المباشر</h1>
+        <p>اختر القسم المناسب للوصول إلى كتبك وأدواتك المفضلين بسهولة</p>
     </div>
 
-    <!-- 2. صفحة التحميل والعداد -->
-    <div id="downloadPage" class="hidden">
-        <div class="download-box">
-            <h2 id="currentFileName">اسم الملف</h2>
-            
-            <p style="color: var(--text-muted); font-size: 14px;">يرجى الانتظار حتى اكتمال عداد التحميل...</p>
-
-           <!-- إعلان البنر الثابت (المنصة الثانية) -->
-<div class="ad-banner">
-    <script>
-        atOptions = {
-            'key' : '37151bfb899e6cb2cdbf41ebdfa2c08f',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-    </script>
-    <script src="https://bellnewyork.org/22/37151bfb899e6cb2cdbf41ebdfa2c08f"></script>
-</div>
-
-            <div class="timer" id="timerText">
-                تجهيز الرابط خلال <span id="seconds">10</span> ثانية...
-            </div>
-
-            <a id="finalDownloadBtn" href="#" target="_blank" class="btn hidden">🚀 تحميل الملف الآن</a>
+    <!-- Main View -->
+    <div id="mainView">
+        <!-- Category Navigation Tabs -->
+        <div class="category-tabs">
+            <button class="tab-btn active" onclick="switchCategory('books')">
+                <i class="fa-solid fa-book-bookmark"></i>
+                قسم الكتب
+            </button>
+            <button class="tab-btn" onclick="switchCategory('tools')">
+                <i class="fa-solid fa-wrench"></i>
+                قسم الأدوات
+            </button>
         </div>
+
+        <!-- Files & Tools List -->
+        <div id="itemsContainer" class="items-grid"></div>
+    </div>
+
+    <!-- Download Gate / Timer View -->
+    <div id="gateView" class="download-gate hidden">
+        <div class="back-link" onclick="resetToHome()">
+            <i class="fa-solid fa-arrow-right"></i>
+            العودة إلى القائمة الرئيسية
+        </div>
+
+        <h2 id="gateItemName" class="gate-title">اسم الملف</h2>
+        <p style="color: var(--text-muted); font-size: 14px;">جاري تجهيز رابط التحميل الآمن لك...</p>
+
+        <!-- Banner Ad Container -->
+        <div class="ad-container">
+            <script>
+                atOptions = {
+                    'key' : '37151bfb899e6cb2cdbf41ebdfa2c08f',
+                    'format' : 'iframe',
+                    'height' : 60,
+                    'width' : 468,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://bellnewyork.org/22/37151bfb899e6cb2cdbf41ebdfa2c08f"></script>
+        </div>
+
+        <!-- Timer Display -->
+        <div id="timerNotice" class="counter-badge">
+            سيكون الرابط جاهزاً خلال <span id="timerSeconds" class="counter-number">10</span> ثانية
+        </div>
+
+        <!-- Final Download Action -->
+        <a id="downloadButton" href="#" target="_blank" class="btn-download hidden" style="padding: 14px 32px; font-size: 16px;">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            تحميل الملف الآن
+        </a>
+    </div>
+
+    <!-- Footer Message -->
+    <div class="footer-blessing">
+        <p>🤍 صلِّ على النبي محمد ﷺ</p>
     </div>
 
 </div>
 
 <script>
-    // قائمة ملفاتك التي ترفعها وتحط روابطها المباشرة هنا
-    const myFiles = [
-        {
-            title: "كتاب شرح ال PYTHON (PDF)",
-            size: "4.54 ميجابايت",
-            downloadUrl: "https://www.mediafire.com/file/r9ewt0umbrtdb7y/code-in-python-3-ar-v1.0.0.pdf/file"
+    // 1. قاعدة البيانات للأقسام والملفات والإعلانات الخاصة بكل قسم
+    const database = {
+        books: {
+            adUrl: "https://auctionr.org/4/1ca561f601755515ad06bd1e6c434272", // إعلان خاص بالكتب
+            items: [
+                {
+                    title: "كتاب شرح الـ Python الكامل (PDF)",
+                    size: "4.54 ميجابايت",
+                    typeIcon: "fa-file-pdf",
+                    downloadUrl: "https://www.mediafire.com/file/r9ewt0umbrtdb7y/code-in-python-3-ar-v1.0.0.pdf/file"
+                },
+                {
+                    title: "كتاب أساسيات الـ HTML5 (RAR)",
+                    size: "4.41 ميجابايت",
+                    typeIcon: "fa-file-archive",
+                    downloadUrl: "https://www.mediafire.com/file/p7fd9k3rc4uhn3g/dive-into-html5-Arabic-1.0.0.rar/file"
+                }
+            ]
         },
-        {
-            title: "كتاب شرح الـ HTML (PDF)",
-            size: "4.41 ميجابايت",
-            downloadUrl: "https://www.mediafire.com/file/p7fd9k3rc4uhn3g/dive-into-html5-Arabic-1.0.0.rar/file"
+        tools: {
+            adUrl: "https://asiafilm.org/4/2b4e98acb43df556965be51b39147979", // إعلان خاص بالأدوات (يمكنك تغييره برابط آخر)
+            items: [
+                {
+                    title: "أداة فحص واستخراج البيانات",
+                    size: "12.8 ميجابايت",
+                    typeIcon: "fa-screws-gutter",
+                    downloadUrl: "https://www.mediafire.com/"
+                },
+                {
+                    title: "حزمة أسطوانة الصيانة المجمعة",
+                    size: "85.0 ميجابايت",
+                    typeIcon: "fa-compact-disc",
+                    downloadUrl: "https://www.mediafire.com/"
+                }
+            ]
         }
-    ];
+    };
 
-    // عرض القائمة تلقائياً
-    const filesList = doctype = document.getElementById('filesList');
-    myFiles.forEach(file => {
-        filesList.innerHTML += `
-            <div class="file-card">
-                <div class="file-info">
-                    <h3>${file.title}</h3>
-                    <span>الحجم: ${file.size}</span>
-                </div>
-                <button class="btn" onclick="openDownloadPage('${file.title}', '${file.downloadUrl}')">تحميل</button>
-            </div>
-        `;
-    });
+    let activeCategory = 'books';
+    let timerInterval = null;
 
-    // دالة الانتقال لصفحة التحميل وتفعيل الإعلانات
-    function openDownloadPage(title, url) {
-        // 1. تشغيل إعلان الـ Pop-under (المنصة الأولى) في نافذة جديدة بمجرد الضغط
-        window.open("https://auctionr.org/4/1ca561f601755515ad06bd1e6c434272");
-
-        // 2. إظهار صفحة العداد للمستخدم
-        document.getElementById('homePage').classList.add('hidden');
-        document.getElementById('downloadPage').classList.remove('hidden');
-        document.getElementById('currentFileName').textContent = title;
-
-        let timeLeft = 10;
-        const secondsSpan = document.getElementById('seconds');
+    // 2. دالة تبديل الأقسام
+    function switchCategory(categoryKey) {
+        activeCategory = categoryKey;
         
-        const timer = setInterval(() => {
-            timeLeft--;
-            secondsSpan.textContent = timeLeft;
+        // تحديث حالة الأزرار العلوية
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => btn.classList.remove('active'));
+        
+        if (categoryKey === 'books') {
+            buttons[0].classList.add('active');
+        } else {
+            buttons[1].classList.add('active');
+        }
 
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                document.getElementById('timerText').classList.add('hidden');
-                
-                const finalBtn = document.getElementById('finalDownloadBtn');
-                finalBtn.href = url; // رابط الملف الحقيقي
-                finalBtn.classList.remove('hidden');
+        renderItems();
+    }
+
+    // 3. دالة عرض العناصر
+    function renderItems() {
+        const container = document.getElementById('itemsContainer');
+        container.innerHTML = '';
+
+        const currentData = database[activeCategory];
+
+        currentData.items.forEach((item, index) => {
+            container.innerHTML += `
+                <div class="file-card">
+                    <div class="item-details">
+                        <div class="item-icon">
+                            <i class="fa-solid ${item.typeIcon}"></i>
+                        </div>
+                        <div class="item-text">
+                            <h3>${item.title}</h3>
+                            <div class="item-meta">
+                                <span><i class="fa-solid fa-hard-drive" style="margin-left: 4px;"></i>${item.size}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-download" onclick="startDownloadProcess('${item.title}', '${item.downloadUrl}')">
+                        تحميل
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                </div>
+            `;
+        });
+    }
+
+    // 4. دالة التحميل وتفعيل الإعلان والعداد
+    function startDownloadProcess(title, fileUrl) {
+        // فتح رابط الإعلان الخاص بالقسم الحالي في نافذة جديدة
+        const categoryAd = database[activeCategory].adUrl;
+        if (categoryAd) {
+            window.open(categoryAd, '_blank');
+        }
+
+        // إخفاء القائمة الرئيسية وإظهار واجهة التحميل
+        document.getElementById('mainView').classList.add('hidden');
+        document.getElementById('gateView').classList.remove('hidden');
+        document.getElementById('gateItemName').textContent = title;
+
+        // إعادة تهيئة العداد والزر
+        const timerNotice = document.getElementById('timerNotice');
+        const secondsSpan = document.getElementById('timerSeconds');
+        const downloadBtn = document.getElementById('downloadButton');
+
+        timerNotice.classList.remove('hidden');
+        downloadBtn.classList.add('hidden');
+        downloadBtn.href = fileUrl;
+
+        let secondsLeft = 10;
+        secondsSpan.textContent = secondsLeft;
+
+        if (timerInterval) clearInterval(timerInterval);
+
+        timerInterval = setInterval(() => {
+            secondsLeft--;
+            secondsSpan.textContent = secondsLeft;
+
+            if (secondsLeft <= 0) {
+                clearInterval(timerInterval);
+                timerNotice.classList.add('hidden');
+                downloadBtn.classList.remove('hidden');
             }
         }, 1000);
     }
+
+    // 5. دالة العودة للقائمة الرئيسية
+    function resetToHome() {
+        if (timerInterval) clearInterval(timerInterval);
+        document.getElementById('gateView').classList.add('hidden');
+        document.getElementById('mainView').classList.remove('hidden');
+    }
+
+    // التشغيل الأولي عند فتح الصفحة
+    renderItems();
 </script>
-<div>
+
+</body>
+</html>
 
     <h1>صلي على النبي محمد </h1>
 </div>
